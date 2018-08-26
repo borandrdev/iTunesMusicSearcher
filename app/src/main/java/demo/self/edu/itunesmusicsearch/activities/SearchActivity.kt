@@ -7,18 +7,21 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import demo.self.edu.itunesmusicsearch.App
 import demo.self.edu.itunesmusicsearch.R
+import demo.self.edu.itunesmusicsearch.mvi.models.SearchScreenModel
 import demo.self.edu.itunesmusicsearch.mvi.presenters.SearchPresenter
 import demo.self.edu.itunesmusicsearch.mvi.views.SearchMvpView
 import kotlinx.android.synthetic.main.activity_search.*
 import ru.terrakok.cicerone.android.SupportAppNavigator
 
-class SearchActivity : MvpAppCompatActivity(),
+class SearchActivity :
+        MvpAppCompatActivity(),
         SearchMvpView {
 
     @InjectPresenter
@@ -81,15 +84,14 @@ class SearchActivity : MvpAppCompatActivity(),
     }
 
 
-    private fun openSearchResultsActivityForText(text: String) {
-        val intent = Intent(this, SearchResultsActivity::class.java)
-        intent.putExtra(SearchResultsActivity.ARG_STR_SEARCH_QUERY, text)
-        startActivity(intent)
+// SearchMvpView =======================================================================================
+
+    override fun render(model: SearchScreenModel) {
+        imgSearch.visibility = if (model.isTextEntered) View.VISIBLE else View.GONE
     }
 
 
 // Navigator =======================================================================================
-
 
     class SearchActivityNavigator(val activity: FragmentActivity) : SupportAppNavigator(activity, 0) {
         override fun createActivityIntent(context: Context?, screenKey: String?, data: Any?): Intent {
@@ -107,6 +109,4 @@ class SearchActivity : MvpAppCompatActivity(),
             return intent
         }
     }
-
-
 }

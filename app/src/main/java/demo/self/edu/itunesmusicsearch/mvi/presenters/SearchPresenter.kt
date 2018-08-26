@@ -3,6 +3,7 @@ package demo.self.edu.itunesmusicsearch.mvi.presenters
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import demo.self.edu.itunesmusicsearch.di.AppComponent
+import demo.self.edu.itunesmusicsearch.mvi.models.SearchScreenModel
 import demo.self.edu.itunesmusicsearch.mvi.views.SearchMvpView
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
@@ -17,7 +18,7 @@ class SearchPresenter(appComponent: AppComponent) : MvpPresenter<SearchMvpView>(
     @Inject
     lateinit var router: Router
 
-    private var searchText: String = ""
+    private var model = SearchScreenModel("")
 
 
     init {
@@ -26,12 +27,18 @@ class SearchPresenter(appComponent: AppComponent) : MvpPresenter<SearchMvpView>(
 
 
     fun onSearchTextChanged(text: String) {
-        this.searchText = text
+        model = SearchScreenModel(text)
+        renderModel()
+
     }
 
     fun onSearchButtonClicked() {
-        if (searchText.isNotEmpty()) {
-            router.navigateTo(SEARCH_RESULTS_SCREEN, searchText)
+        if (model.isTextEntered) {
+            router.navigateTo(SEARCH_RESULTS_SCREEN, model.text)
         }
+    }
+
+    private fun renderModel() {
+        viewState.render(model)
     }
 }
