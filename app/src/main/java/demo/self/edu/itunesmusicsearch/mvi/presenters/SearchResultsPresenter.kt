@@ -1,5 +1,6 @@
 package demo.self.edu.itunesmusicsearch.mvi.presenters
 
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import demo.self.edu.itunesmusicsearch.api.CompleteListener
@@ -13,6 +14,10 @@ import javax.inject.Inject
 
 @InjectViewState
 class SearchResultsPresenter(searchResultsComponent: SearchResultsComponent) : MvpPresenter<SearchResultsMvpView>() {
+    companion object {
+        @Suppress("unused")
+        val TAG = SearchResultsPresenter::class.java.simpleName!!
+    }
 
     private var model = SearchResultsScreenModel.createUninitializedModel()
 
@@ -34,7 +39,9 @@ class SearchResultsPresenter(searchResultsComponent: SearchResultsComponent) : M
         }
     }
 
-    fun filterTracksWithText(text: CharSequence?) {
+    fun onFilterTextChanged(text: CharSequence?) {
+        Log.v(TAG, "filter: $text")
+
         val allTracks = model.tracks
         if ((text != null) && model.hasLoadedTracks() && (allTracks != null)) {
             val filterText = text.toString()
