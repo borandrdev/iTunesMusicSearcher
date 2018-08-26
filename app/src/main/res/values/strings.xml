@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">iTunesMusicSearch</string>
+
+    <plurals name="found_tracks">
+        <item quantity="one">%1$d song</item>
+        <item quantity="other">%1$d songs</item>
+    </plurals>
+
+    <string name="err_failed_to_search">Failed to get data from iTunes</string>
+    <string name="btnRetry">Retry</string>
+
+    <string name="imgSearch">Search text</string>
+    <string name="imgBack">Back to previous screen</string>
+
+    <string name="hint_edSearch">Enter text…</string>
+    <string name="hint_edFilter">Filter</string>
+
+    <string name="initial_search_text">Hello</string>
+
+    <string name="tvSearchScreenTitle">FIND YOUR MUSIC\nON ITUNES</string>
+    <string name="tvNoResults">No result found</string>
+</resources>

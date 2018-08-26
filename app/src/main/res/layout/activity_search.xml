@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_dark_blue"
+    tools:context=".activities.SearchActivity">
+
+    <View
+        android:id="@+id/imgBackground"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_1"
+        app:layout_constraintBottom_toBottomOf="@+id/edSearch"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_max="400dp" />
+
+    <TextView
+        android:id="@+id/tvSearchScreenTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:lines="2"
+        android:text="@string/tvSearchScreenTitle"
+        android:textColor="@android:color/white"
+        android:textSize="33sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@id/edSearch" />
+
+    <EditText
+        android:id="@+id/edSearch"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height_search_text_input"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/bg_search_input"
+        android:gravity="center"
+        android:hint="@string/hint_edSearch"
+        android:imeOptions="actionSearch"
+        android:inputType="textCapSentences|textAutoComplete"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:text="@string/initial_search_text"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
+
+    <ImageView
+        android:id="@+id/imgSearch"
+        android:layout_width="50dp"
+        android:layout_height="@dimen/height_search_text_input"
+        android:clickable="true"
+        android:contentDescription="@string/imgSearch"
+        android:focusable="true"
+        android:padding="16dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_search"
+        app:layout_constraintEnd_toEndOf="@+id/edSearch"
+        app:layout_constraintTop_toTopOf="@+id/edSearch" />
+</android.support.constraint.ConstraintLayout>
