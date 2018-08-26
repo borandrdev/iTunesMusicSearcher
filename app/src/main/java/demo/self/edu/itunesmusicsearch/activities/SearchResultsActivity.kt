@@ -67,6 +67,10 @@ class SearchResultsActivity :
         (application as App).navigatorHolder.removeNavigator()
     }
 
+    override fun onBackPressed() {
+        presenter.onBackPressed()
+    }
+
     private fun searchTracksForTextInIntentExtra() {
         var searchQuery: String? = null
         if (intent != null) {
@@ -97,6 +101,9 @@ class SearchResultsActivity :
     }
 
     private fun renderSearchSucceededScreen(tracks: List<Track>, filterText: String?) {
+        if (edFilter.text.isNotEmpty() && filterText.isNullOrEmpty()) {
+            edFilter.setText("")
+        }
         tvNoResults.visibility = if (tracks.isNotEmpty()) View.GONE else View.VISIBLE
 
         rvSearchResults.adapter = TrackAdapter(tracks)

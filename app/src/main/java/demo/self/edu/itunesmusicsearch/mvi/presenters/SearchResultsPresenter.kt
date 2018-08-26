@@ -10,6 +10,7 @@ import demo.self.edu.itunesmusicsearch.interactors.FilterTracksInteractor
 import demo.self.edu.itunesmusicsearch.interactors.SearchTrackInteractor
 import demo.self.edu.itunesmusicsearch.mvi.models.SearchResultsScreenModel
 import demo.self.edu.itunesmusicsearch.mvi.views.SearchResultsMvpView
+import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 @InjectViewState
@@ -25,6 +26,8 @@ class SearchResultsPresenter(searchResultsComponent: SearchResultsComponent) : M
     lateinit var filterInteractor: FilterTracksInteractor
     @Inject
     lateinit var searchInteractor: SearchTrackInteractor
+    @Inject
+    lateinit var router: Router
 
     init {
         searchResultsComponent.inject(this)
@@ -51,6 +54,16 @@ class SearchResultsPresenter(searchResultsComponent: SearchResultsComponent) : M
         }
     }
 
+
+    fun onBackPressed() {
+        if (model.isFilterApplied) {
+            val filterText = ""
+            onFilterTextChanged(filterText)
+        } else {
+            router.exit()
+        }
+    }
+
     private fun view(model: SearchResultsScreenModel) {
         viewState.render(model)
     }
@@ -70,4 +83,5 @@ class SearchResultsPresenter(searchResultsComponent: SearchResultsComponent) : M
         model = SearchResultsScreenModel.createOnSearchComplete(model, foundTracks)
         view(model)
     }
+
 }
