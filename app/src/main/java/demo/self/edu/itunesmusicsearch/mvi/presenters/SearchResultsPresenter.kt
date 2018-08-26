@@ -8,11 +8,11 @@ import demo.self.edu.itunesmusicsearch.di.SearchResultsComponent
 import demo.self.edu.itunesmusicsearch.interactors.FilterTracksInteractor
 import demo.self.edu.itunesmusicsearch.interactors.SearchTrackInteractor
 import demo.self.edu.itunesmusicsearch.mvi.models.SearchResultsScreenModel
-import demo.self.edu.itunesmusicsearch.mvi.views.SearchResultsView
+import demo.self.edu.itunesmusicsearch.mvi.views.SearchResultsMvpView
 import javax.inject.Inject
 
 @InjectViewState
-class SearchResultsPresenter(searchResultsComponent: SearchResultsComponent) : MvpPresenter<SearchResultsView>() {
+class SearchResultsPresenter(searchResultsComponent: SearchResultsComponent) : MvpPresenter<SearchResultsMvpView>() {
 
     private var model = SearchResultsScreenModel.createUninitializedModel()
 

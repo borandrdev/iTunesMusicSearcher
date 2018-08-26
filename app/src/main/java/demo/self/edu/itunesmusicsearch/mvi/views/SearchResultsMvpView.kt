@@ -5,7 +5,7 @@ import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 import demo.self.edu.itunesmusicsearch.mvi.models.SearchResultsScreenModel
 
-interface SearchResultsView : MvpView {
+interface SearchResultsMvpView : MvpView {
     @StateStrategyType(SingleStateStrategy::class)
     fun render(model: SearchResultsScreenModel)
 }

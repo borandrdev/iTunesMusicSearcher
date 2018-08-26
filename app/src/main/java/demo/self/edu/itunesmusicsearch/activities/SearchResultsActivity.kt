@@ -17,13 +17,13 @@ import demo.self.edu.itunesmusicsearch.adapters.TrackAdapter
 import demo.self.edu.itunesmusicsearch.interactors.ui.RxSearchObservable
 import demo.self.edu.itunesmusicsearch.mvi.models.SearchResultsScreenModel
 import demo.self.edu.itunesmusicsearch.mvi.presenters.SearchResultsPresenter
-import demo.self.edu.itunesmusicsearch.mvi.views.SearchResultsView
+import demo.self.edu.itunesmusicsearch.mvi.views.SearchResultsMvpView
 import kotlinx.android.synthetic.main.activity_search_results.*
 import kotlinx.android.synthetic.main.toolbar_search_result.*
 import java.util.concurrent.TimeUnit
 
 class SearchResultsActivity : MvpAppCompatActivity()
-        , SearchResultsView {
+        , SearchResultsMvpView {
     companion object {
         const val ARG_STR_SEARCH_QUERY = "search_query"
         @Suppress("unused")
@@ -78,7 +78,7 @@ class SearchResultsActivity : MvpAppCompatActivity()
     }
 
 
-// SearchResultsView ===============================================================================
+// SearchResultsMvpView ============================================================================
 
     override fun render(model: SearchResultsScreenModel) {
         tvSearchResultTitle.text = model.searchText ?: ""
