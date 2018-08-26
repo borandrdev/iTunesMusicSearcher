@@ -6,7 +6,5 @@ Used: Moxy, Cicerone, Dagger2, Retrofit, Gson
 
 TODOs:
 - Error handling
-- Dagger2 Displays
-- Cicerone
 - unit tests
 - ui tests
