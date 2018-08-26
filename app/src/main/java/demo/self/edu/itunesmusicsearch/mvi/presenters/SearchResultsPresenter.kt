@@ -3,20 +3,27 @@ package demo.self.edu.itunesmusicsearch.mvi.presenters
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import demo.self.edu.itunesmusicsearch.api.CompleteListener
-import demo.self.edu.itunesmusicsearch.api.TrackSearcher
 import demo.self.edu.itunesmusicsearch.api.model.Track
+import demo.self.edu.itunesmusicsearch.di.SearchResultsComponent
 import demo.self.edu.itunesmusicsearch.interactors.FilterTracksInteractor
 import demo.self.edu.itunesmusicsearch.interactors.SearchTrackInteractor
 import demo.self.edu.itunesmusicsearch.mvi.models.SearchResultsScreenModel
 import demo.self.edu.itunesmusicsearch.mvi.views.SearchResultsView
+import javax.inject.Inject
 
 @InjectViewState
-class SearchResultsPresenter : MvpPresenter<SearchResultsView>() {
+class SearchResultsPresenter(searchResultsComponent: SearchResultsComponent) : MvpPresenter<SearchResultsView>() {
 
     private var model = SearchResultsScreenModel.createUninitializedModel()
 
-    private val filterInteractor = FilterTracksInteractor()
-    private val searchInteractor = SearchTrackInteractor(TrackSearcher()) // TODO Inject as single instance
+    @Inject
+    lateinit var filterInteractor: FilterTracksInteractor
+    @Inject
+    lateinit var searchInteractor: SearchTrackInteractor
+
+    init {
+        searchResultsComponent.inject(this)
+    }
 
     fun searchTracksForText(text: String?) {
         if ((text != null) && !model.isLoading) {

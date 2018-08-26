@@ -11,9 +11,10 @@ import android.widget.LinearLayout
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import demo.self.edu.itunesmusicsearch.App
 import demo.self.edu.itunesmusicsearch.R
 import demo.self.edu.itunesmusicsearch.adapters.TrackAdapter
-import demo.self.edu.itunesmusicsearch.interactors.RxSearchObservable
+import demo.self.edu.itunesmusicsearch.interactors.ui.RxSearchObservable
 import demo.self.edu.itunesmusicsearch.mvi.models.SearchResultsScreenModel
 import demo.self.edu.itunesmusicsearch.mvi.presenters.SearchResultsPresenter
 import demo.self.edu.itunesmusicsearch.mvi.views.SearchResultsView
@@ -33,7 +34,10 @@ class SearchResultsActivity : MvpAppCompatActivity()
     lateinit var presenter: SearchResultsPresenter
 
     @ProvidePresenter
-    fun providePresenter(): SearchResultsPresenter = SearchResultsPresenter()
+    fun providePresenter(): SearchResultsPresenter {
+        val diComponent = (application as App).diComponents.searchResultsComponent
+        return SearchResultsPresenter(diComponent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

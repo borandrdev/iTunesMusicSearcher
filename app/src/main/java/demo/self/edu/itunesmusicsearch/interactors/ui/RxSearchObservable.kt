@@ -1,4 +1,4 @@
-package demo.self.edu.itunesmusicsearch.interactors
+package demo.self.edu.itunesmusicsearch.interactors.ui
 
 import android.text.Editable
 import android.text.TextWatcher
