@@ -1,7 +1,11 @@
 package demo.self.edu.itunesmusicsearch.activities
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
@@ -20,10 +24,13 @@ import demo.self.edu.itunesmusicsearch.mvi.presenters.SearchResultsPresenter
 import demo.self.edu.itunesmusicsearch.mvi.views.SearchResultsMvpView
 import kotlinx.android.synthetic.main.activity_search_results.*
 import kotlinx.android.synthetic.main.toolbar_search_result.*
+import ru.terrakok.cicerone.android.SupportAppNavigator
 import java.util.concurrent.TimeUnit
 
-class SearchResultsActivity : MvpAppCompatActivity()
+class SearchResultsActivity :
+        MvpAppCompatActivity()
         , SearchResultsMvpView {
+
     companion object {
         const val ARG_STR_SEARCH_QUERY = "search_query"
         @Suppress("unused")
@@ -33,11 +40,13 @@ class SearchResultsActivity : MvpAppCompatActivity()
     @InjectPresenter
     lateinit var presenter: SearchResultsPresenter
 
+
     @ProvidePresenter
     fun providePresenter(): SearchResultsPresenter {
         val diComponent = (application as App).diComponents.searchResultsComponent
         return SearchResultsPresenter(diComponent)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +55,16 @@ class SearchResultsActivity : MvpAppCompatActivity()
         searchTracksForTextInIntentExtra()
 
         initView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (application as App).navigatorHolder.setNavigator(SearchResultsNavigator(this))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        (application as App).navigatorHolder.removeNavigator()
     }
 
     private fun searchTracksForTextInIntentExtra() {
@@ -113,5 +132,14 @@ class SearchResultsActivity : MvpAppCompatActivity()
                         .show()
             }
         }
+    }
+
+
+// Navigator =======================================================================================
+
+    private class SearchResultsNavigator(val activity: FragmentActivity) : SupportAppNavigator(activity, 0) {
+        override fun createActivityIntent(context: Context?, screenKey: String?, data: Any?): Intent = Intent()
+
+        override fun createFragment(screenKey: String?, data: Any?): Fragment = Fragment()
     }
 }

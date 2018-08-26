@@ -26,7 +26,6 @@ class SearchActivity :
 
     @InjectPresenter
     lateinit var presenter: SearchPresenter
-    private val navigator = SearchActivityNavigator(this)
 
     @ProvidePresenter
     fun providePresenter(): SearchPresenter {
@@ -93,7 +92,7 @@ class SearchActivity :
 
 // Navigator =======================================================================================
 
-    class SearchActivityNavigator(val activity: FragmentActivity) : SupportAppNavigator(activity, 0) {
+    private class SearchActivityNavigator(val activity: FragmentActivity) : SupportAppNavigator(activity, 0) {
         override fun createActivityIntent(context: Context?, screenKey: String?, data: Any?): Intent {
             if ((screenKey == SearchPresenter.SEARCH_RESULTS_SCREEN) && (data is String)) {
                 return createIntentToOpenSearchResultsForQuery(data)
