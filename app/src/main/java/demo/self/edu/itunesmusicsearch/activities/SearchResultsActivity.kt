@@ -52,7 +52,9 @@ class SearchResultsActivity :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_results)
 
-        searchTracksForTextInIntentExtra()
+        if (savedInstanceState == null) {
+            searchTracksForTextInIntentExtra()
+        }
 
         initView()
     }
