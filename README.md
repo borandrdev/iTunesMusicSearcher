@@ -5,5 +5,6 @@ The app consists of two screens: enter search query screen and filter search res
 Used: Moxy, Cicerone, Dagger2, Retrofit, Gson
 
 TODOs:
+- shared element transition animation
 - unit tests
 - ui tests
