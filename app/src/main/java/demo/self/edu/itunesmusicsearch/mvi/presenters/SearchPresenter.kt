@@ -3,7 +3,6 @@ package demo.self.edu.itunesmusicsearch.mvi.presenters
 import android.content.Context
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import demo.self.edu.itunesmusicsearch.R
 import demo.self.edu.itunesmusicsearch.api.CompleteListener
 import demo.self.edu.itunesmusicsearch.api.model.Track
 import demo.self.edu.itunesmusicsearch.di.SearchScreenComponent
@@ -19,6 +18,7 @@ class SearchPresenter(appComponent: SearchScreenComponent) : MvpPresenter<Search
         const val SEARCH_RESULTS_SCREEN = "SEARCH_RESULTS"
     }
 
+    @Suppress("unused")
     @Inject
     lateinit var appContext: Context
     @Inject
@@ -26,7 +26,7 @@ class SearchPresenter(appComponent: SearchScreenComponent) : MvpPresenter<Search
     @Inject
     lateinit var router: Router
 
-    private var model = SearchScreenModel("")
+    private var model = SearchScreenModel.createModelForIdleState()
 
 
     init {
@@ -35,7 +35,7 @@ class SearchPresenter(appComponent: SearchScreenComponent) : MvpPresenter<Search
 
 
     fun onSearchTextChanged(text: String) {
-        model = SearchScreenModel(text)
+        model = SearchScreenModel.createModelForTextEnterState(model, text)
         view(model)
     }
 
@@ -58,13 +58,16 @@ class SearchPresenter(appComponent: SearchScreenComponent) : MvpPresenter<Search
     }
 
     private fun onSearchComplete(foundTracks: List<Track>?) {
-        model = SearchScreenModel.createModelForSearchFinished(model)
-        view(model)
+
         if (foundTracks == null) {
-            router.showSystemMessage(appContext.getString(R.string.err_failed_to_search))
+            model = SearchScreenModel.createModelForSearchError(model)
+//            router.showSystemMessage(appContext.getString(R.string.err_failed_to_search))
         } else {
+            model = SearchScreenModel.createModelForSearchFinished(model)
             router.navigateTo(SEARCH_RESULTS_SCREEN, model.text)
         }
+
+        view(model)
     }
 
     private fun view(model: SearchScreenModel) {

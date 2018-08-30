@@ -3,12 +3,14 @@ package demo.self.edu.itunesmusicsearch.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -73,22 +75,35 @@ class SearchActivity :
             }
         })
         edSearch.setSelection(edSearch.text.length)
-        edSearch.setOnEditorActionListener { _, actionId, _ ->
+        edSearch.setOnEditorActionListener { v, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 presenter.onSearchButtonClicked()
+                closeKeyboard(v)
                 return@setOnEditorActionListener true
             }
-            false
+            return@setOnEditorActionListener false
         }
     }
 
 
-// SearchMvpView =======================================================================================
+    private fun closeKeyboard(focusedView: View) {
+        focusedView.clearFocus()
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(focusedView.windowToken, 0)
+    }
+
+
+// SearchMvpView ===================================================================================
 
     override fun render(model: SearchScreenModel) {
-//        edSearch.visibility = if (!model.isSearching) View.VISIBLE else View.GONE
+        edSearch.isEnabled = !model.isSearching
         prgSearching.visibility = if (model.isSearching) View.VISIBLE else View.GONE
         imgSearch.visibility = if (model.isTextEntered && !model.isSearching) View.VISIBLE else View.GONE
+        if (model.hasError) {
+            Snackbar.make(edSearch, R.string.err_failed_to_search, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(R.string.btnRetry) { presenter.onSearchButtonClicked() }
+                    .show()
+        }
     }
 
 
