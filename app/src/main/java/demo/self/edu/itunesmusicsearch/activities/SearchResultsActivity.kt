@@ -3,7 +3,6 @@ package demo.self.edu.itunesmusicsearch.activities
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -43,7 +42,7 @@ class SearchResultsActivity :
 
     @ProvidePresenter
     fun providePresenter(): SearchResultsPresenter {
-        val diComponent = (application as App).diComponents.searchResultsComponent
+        val diComponent = (application as App).diComponents.searchResultsScreenComponent
         return SearchResultsPresenter(diComponent)
     }
 
@@ -53,7 +52,7 @@ class SearchResultsActivity :
         setContentView(R.layout.activity_search_results)
 
         if (savedInstanceState == null) {
-            searchTracksForTextInIntentExtra()
+            presenter.getLastFoundTracks()
         }
 
         initView()
@@ -67,15 +66,6 @@ class SearchResultsActivity :
     override fun onPause() {
         super.onPause()
         (application as App).navigatorHolder.removeNavigator()
-    }
-
-    private fun searchTracksForTextInIntentExtra() {
-        var searchQuery: String? = null
-        if (intent != null) {
-            searchQuery = intent.getStringExtra(ARG_STR_SEARCH_QUERY)
-        }
-
-        presenter.searchTracksForText(searchQuery)
     }
 
 
@@ -129,9 +119,10 @@ class SearchResultsActivity :
                 tvNoResults.visibility = View.GONE
                 edFilter.visibility = View.GONE
                 rvSearchResults.adapter = TrackAdapter(tracks)
-                Snackbar.make(rvSearchResults, R.string.err_failed_to_search, Snackbar.LENGTH_INDEFINITE)
-                        .setAction(R.string.btnRetry) { this.searchTracksForTextInIntentExtra() }   // TODO Via presenter
-                        .show()
+                // TODO
+//                Snackbar.make(rvSearchResults, R.string.err_failed_to_search, Snackbar.LENGTH_INDEFINITE)
+//                        .setAction(R.string.btnRetry) { this.searchTracksForTextInIntentExtra() }   // TODO Via presenter
+//                        .show()
             }
         }
     }
@@ -139,7 +130,7 @@ class SearchResultsActivity :
 
 // Navigator =======================================================================================
 
-    private class SearchResultsNavigator(val activity: FragmentActivity) : SupportAppNavigator(activity, 0) {
+    private class SearchResultsNavigator(activity: FragmentActivity) : SupportAppNavigator(activity, 0) {
         override fun createActivityIntent(context: Context?, screenKey: String?, data: Any?): Intent = Intent()
 
         override fun createFragment(screenKey: String?, data: Any?): Fragment = Fragment()

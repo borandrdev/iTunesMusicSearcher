@@ -8,11 +8,22 @@ import io.reactivex.schedulers.Schedulers
 
 class SearchTrackInteractor(private val trackSearcher: TrackSearcher) {
 
+    private var text: String? = null
+    private var foundTracks: List<Track>? = null
+
+    val lastSearchText: String?
+        get() = text
+    val lastFoundTracks: List<Track>?
+        get() = foundTracks
+
+
     fun searchTracksForText(text: String, completeListener: CompleteListener<List<Track>>) {
         trackSearcher.searchTracksForText(text)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
+                    this.text = text
+                    this.foundTracks = it
                     completeListener.onCompelete(it)
                 }
 

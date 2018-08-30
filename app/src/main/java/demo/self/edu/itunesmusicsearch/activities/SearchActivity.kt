@@ -29,8 +29,8 @@ class SearchActivity :
 
     @ProvidePresenter
     fun providePresenter(): SearchPresenter {
-        val appComponent = (application as App).diComponents.appComponent
-        return SearchPresenter(appComponent)
+        val component = (application as App).diComponents.searchScreenComponent
+        return SearchPresenter(component)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +86,9 @@ class SearchActivity :
 // SearchMvpView =======================================================================================
 
     override fun render(model: SearchScreenModel) {
-        imgSearch.visibility = if (model.isTextEntered) View.VISIBLE else View.GONE
+//        edSearch.visibility = if (!model.isSearching) View.VISIBLE else View.GONE
+        prgSearching.visibility = if (model.isSearching) View.VISIBLE else View.GONE
+        imgSearch.visibility = if (model.isTextEntered && !model.isSearching) View.VISIBLE else View.GONE
     }
 
 

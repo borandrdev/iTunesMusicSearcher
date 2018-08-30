@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/gradient_dark_blue"
-    tools:context=".activities.SearchActivity">
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:background="@drawable/gradient_dark_blue"
+                                             tools:context=".activities.SearchActivity">
 
     <View
         android:id="@+id/imgBackground"
@@ -16,7 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="400dp" />
+        app:layout_constraintWidth_max="400dp"/>
 
     <TextView
         android:id="@+id/tvSearchScreenTitle"
@@ -29,7 +29,7 @@
         android:textColor="@android:color/white"
         android:textSize="33sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@id/edSearch" />
+        app:layout_constraintBottom_toTopOf="@id/edSearch"/>
 
     <EditText
         android:id="@+id/edSearch"
@@ -52,7 +52,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.499"/>
 
     <ImageView
         android:id="@+id/imgSearch"
@@ -65,5 +65,16 @@
         android:scaleType="fitCenter"
         android:src="@drawable/ic_search"
         app:layout_constraintEnd_toEndOf="@+id/edSearch"
-        app:layout_constraintTop_toTopOf="@+id/edSearch" />
+        app:layout_constraintTop_toTopOf="@+id/edSearch"/>
+
+    <ProgressBar
+        android:id="@+id/prgSearching"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible"/>
 </android.support.constraint.ConstraintLayout>
