@@ -11,7 +11,7 @@ class SearchResultsScreenModel {
         fun createOnSearchComplete(model: SearchResultsScreenModel, foundTracks: List<Track>?):
                 SearchResultsScreenModel = SearchResultsScreenModel(model.searchText, false, foundTracks)
 
-        fun createOnTracksFiltered(model: SearchResultsScreenModel, filterText:String?, filteredTracks: List<Track>?):
+        fun createOnTracksFiltered(model: SearchResultsScreenModel, filterText: String?, filteredTracks: List<Track>?):
                 SearchResultsScreenModel = SearchResultsScreenModel(model.searchText, false, filteredTracks, filterText)
     }
 
@@ -19,6 +19,8 @@ class SearchResultsScreenModel {
     val filterText: String?
     val isLoading: Boolean
     val tracks: List<Track>?
+    val isFilterApplied: Boolean
+        get() = filterText?.isNotEmpty() ?: false
 
     private constructor() {
         searchText = null

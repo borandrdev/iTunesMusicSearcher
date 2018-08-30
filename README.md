@@ -5,6 +5,5 @@ The app consists of two screens: enter search query screen and filter search res
 Used: Moxy, Cicerone, Dagger2, Retrofit, Gson
 
 TODOs:
-- Error handling
 - unit tests
 - ui tests
