@@ -1,6 +1,8 @@
 package demo.self.edu.itunesmusicsearch.mvi.presenters
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import demo.self.edu.itunesmusicsearch.api.CompleteListener
@@ -16,6 +18,7 @@ import javax.inject.Inject
 class SearchPresenter(appComponent: SearchScreenComponent) : MvpPresenter<SearchMvpView>() {
     companion object {
         const val SEARCH_RESULTS_SCREEN = "SEARCH_RESULTS"
+        const val DELAY_SEARCH_COMPLETED_SCREEN_UPDATE_MS = 100L
     }
 
     @Suppress("unused")
@@ -58,16 +61,25 @@ class SearchPresenter(appComponent: SearchScreenComponent) : MvpPresenter<Search
     }
 
     private fun onSearchComplete(foundTracks: List<Track>?) {
-
         if (foundTracks == null) {
-            model = SearchScreenModel.createModelForSearchError(model)
-//            router.showSystemMessage(appContext.getString(R.string.err_failed_to_search))
+            showSearchFailedScreenState()
         } else {
-            model = SearchScreenModel.createModelForSearchFinished(model)
-            router.navigateTo(SEARCH_RESULTS_SCREEN, model.text)
+            onSearchCompletedSuccessfully()
         }
+    }
 
+    private fun showSearchFailedScreenState() {
+        model = SearchScreenModel.createModelForSearchError(model)
         view(model)
+    }
+
+    private fun onSearchCompletedSuccessfully() {
+        router.navigateTo(SEARCH_RESULTS_SCREEN, model.text)
+
+        model = SearchScreenModel.createModelForSearchFinished(model)
+        Handler(Looper.getMainLooper()).postDelayed({
+            view(model)
+        }, DELAY_SEARCH_COMPLETED_SCREEN_UPDATE_MS)
     }
 
     private fun view(model: SearchScreenModel) {

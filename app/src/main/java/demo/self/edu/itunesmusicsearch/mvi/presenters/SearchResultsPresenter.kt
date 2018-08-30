@@ -31,9 +31,10 @@ class SearchResultsPresenter(searchResultsComponent: SearchResultsComponent) : M
         searchResultsComponent.inject(this)
     }
 
-    fun getLastFoundTracks() {
+    fun init() {
         val lastSearchText = searchInteractor.lastSearchText
-        if ((lastSearchText != null) && !model.isLoading) {
+        if (lastSearchText != null) {
+            filterInteractor.allTracks = searchInteractor.lastFoundTracks
             model = SearchResultsScreenModel.createStartSearchingModel(lastSearchText)
             model = SearchResultsScreenModel.createOnSearchComplete(model, searchInteractor.lastFoundTracks)
             view(model)

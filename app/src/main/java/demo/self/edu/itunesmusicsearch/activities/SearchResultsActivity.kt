@@ -23,6 +23,7 @@ import demo.self.edu.itunesmusicsearch.mvi.views.SearchResultsMvpView
 import kotlinx.android.synthetic.main.activity_search_results.*
 import kotlinx.android.synthetic.main.toolbar_search_result.*
 import ru.terrakok.cicerone.android.SupportAppNavigator
+import java.util.*
 
 class SearchResultsActivity :
         MvpAppCompatActivity()
@@ -50,7 +51,7 @@ class SearchResultsActivity :
         setContentView(R.layout.activity_search_results)
 
         if (savedInstanceState == null) {
-            presenter.getLastFoundTracks()
+            presenter.init()
         }
 
         initView()
@@ -105,24 +106,13 @@ class SearchResultsActivity :
         edFilter.visibility = if (hideFilterTracksView) View.GONE else View.VISIBLE
     }
 
-    private fun onNoResultsAvailable() {
-        finish()
-    }
-
 // SearchResultsMvpView ============================================================================
 
     override fun render(model: SearchResultsScreenModel) {
         tvSearchResultTitle.text = model.searchText ?: ""
-        prgSearching.visibility = if (model.isLoading) View.VISIBLE else View.GONE
 
-        val tracks = model.tracks
-        if (!model.isLoading) {
-            if (tracks != null) {
-                renderSearchSucceededScreen(tracks, model.filterText)
-            } else {
-                onNoResultsAvailable()
-            }
-        }
+        val tracks = model.tracks ?: Collections.emptyList()
+        renderSearchSucceededScreen(tracks, model.filterText)
     }
 
 // Navigator =======================================================================================
